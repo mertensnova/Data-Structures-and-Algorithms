@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 #include "Linked_List.h"
 
@@ -9,31 +10,38 @@ int main( void )
     Node *head = NULL;
     Node *tmp;
 
-    Node *tmp_2  = head;
 
-    // tmp = create_node( 2 );
-    // head = tmp;
+    tmp = create_node( 1 );
+    head = tmp;
 
-    tmp = create_node( 3 );
-    while (tmp_2->next != NULL)
-    {
-        tmp_2 = tmp_2->next;
-    }
+    for (int i = 2; i < 20; i++)
+        insert_node_at_tail(head,i);
 
-    tmp_2 = tmp;
-    // tmp_2->next = tmp;
     
-    // tmp = create_node( 3 );
-    // head->next->next = tmp;
-
-    // tmp = create_node( 4 );
-    // head->next->next->next = tmp;
+    find_node(head,10);
     
     print_nodes( head );
 
     return 0;
 }
 
+void *find_node( Node *head, int data )
+{
+    Node *tmp = head;
+    bool found = false;
+    while (tmp->next != NULL)
+    {
+        tmp = tmp->next;
+        if (tmp->data == data)
+           found = true;
+    }
+
+    if ( found )
+        printf("Data Found: %d at %p\n",tmp->data,&tmp->data);
+    else
+        printf("Not found");
+
+}
 
 Node *create_node( int data )
 {
@@ -44,16 +52,16 @@ Node *create_node( int data )
     return new_node;
 }
 
-Node *insert_node_at_tail( Node *head, int data )
+void *insert_node_at_tail( Node *head, int data )
 {
+
     Node *tmp = head;
-    while ( tmp != NULL )
+    Node *new_node;
+    while ( tmp->next != NULL )
         tmp = tmp->next;
     
-    Node *new_node = create_node( data );
-    tmp = new_node;
-
-    return tmp;
+    new_node = create_node( data );
+    tmp->next = new_node;
 }
 
 void print_nodes( Node *head )
