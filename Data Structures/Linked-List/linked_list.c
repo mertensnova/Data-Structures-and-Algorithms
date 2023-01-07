@@ -18,8 +18,9 @@ int main( int argc, char *argv[] )
         head = insert_node_at_head(head,i);
     
     // find_node( head, atoi(argv[1]) );   
-    head = delete_head_node( head ); 
-    delete_node( &head, 17); 
+    // head = delete_head_node( head ); 
+    // update_node( head, 17 , 222); 
+    // update_node( head, 7 , 99); 
     print_nodes( head );
 
     return 0;
@@ -126,4 +127,26 @@ void delete_node( Node **head , int data)
 
     free(curr);
     curr = NULL;
+}
+
+void update_node( Node *head , int data , int new_data)
+{
+    Node *tmp = head;
+    bool found = false;
+    int data_found;
+    while (tmp->next != NULL)
+    {
+        tmp = tmp->next;
+        if (tmp->data == data)
+        {
+           found = true;
+           data_found = tmp->data;
+           tmp->data = new_data;
+        }
+    }
+
+    if ( found )
+       printf("Data %d have been updated to %d at memory address %p\n",data_found,new_data,&tmp->data);
+    else
+        printf("Not found");
 }

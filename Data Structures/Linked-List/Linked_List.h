@@ -19,5 +19,6 @@ void insert_node_at_tail( Node *head, int data );
 Node *insert_node_at_head( Node *head, int data );
 Node *delete_head_node( Node *head );
 void delete_node( Node **head , int data);
+void update_node( Node *head , int data , int new_data);
 
 #endif
