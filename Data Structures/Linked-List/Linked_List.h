@@ -1,8 +1,5 @@
 #ifndef LINKED_LIST_H
 #define LINKED_LIST_H
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 
 typedef struct Node
@@ -12,13 +9,13 @@ typedef struct Node
 
 } Node;
 
-Node *create_node( int data );
-void find_node( Node *head, int data );
-void print_nodes( Node *head );
-void insert_node_at_tail( Node *head, int data );
-Node *insert_node_at_head( Node *head, int data );
-Node *delete_head_node( Node *head );
-void delete_node( Node **head , int data);
-void update_node( Node *head , int data , int new_data);
+Node *node_create( int data );
+void node_find( Node *head, int data );
+void node_print( Node *head );
+void node_insert_at_tail( Node *head, int data );
+Node *node_insert_at_head( Node *head, int data );
+Node *node_delete_head( Node *head );
+void node_delete( Node **head , int data);
+void node_update( Node *head , int data , int new_data);
 
 #endif

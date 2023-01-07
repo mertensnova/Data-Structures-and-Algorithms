@@ -10,23 +10,19 @@ int main( int argc, char *argv[] )
     Node *head = NULL;
     Node *tmp;
 
-    tmp = create_node( 1 );
+    tmp = node_create( 1 );
     head = tmp;
 
     
     for (int i = 2; i < 20; i++)
-        head = insert_node_at_head(head,i);
+        head =  node_insert_at_head(head,i);
     
-    // find_node( head, atoi(argv[1]) );   
-    // head = delete_head_node( head ); 
-    // update_node( head, 17 , 222); 
-    // update_node( head, 7 , 99); 
-    print_nodes( head );
+    node_print( head );
 
     return 0;
 }
 
-void find_node( Node *head, int data )
+void node_find( Node *head, int data )
 {
     Node *tmp = head;
     bool found = false;
@@ -48,7 +44,7 @@ void find_node( Node *head, int data )
 
 }
 
-Node *create_node( int data )
+Node *node_create( int data )
 {
     Node *new_node = ( Node* ) malloc( sizeof( Node ) );
     new_node->data = data;
@@ -57,7 +53,7 @@ Node *create_node( int data )
     return new_node;
 }
 
-void insert_node_at_tail( Node *head, int data )
+void node_insert_at_tail( Node *head, int data )
 {
 
     Node *tmp = head;
@@ -65,22 +61,22 @@ void insert_node_at_tail( Node *head, int data )
     while ( tmp->next != NULL )
         tmp = tmp->next;
     
-    new_node = create_node( data );
+    new_node = node_create( data );
     tmp->next = new_node;
 }
 
-Node *insert_node_at_head( Node *head, int data )
+Node *node_insert_at_head( Node *head, int data )
 {
 
     Node *tmp = head;
-    Node *new_node  = create_node(data);
+    Node *new_node  = node_create(data);
     new_node->next = tmp;
     tmp = new_node;
 
     return tmp;
 }
 
-void print_nodes( Node *head )
+void node_print( Node *head )
 {
     Node *tmp = head;
     while (tmp != NULL)
@@ -92,7 +88,7 @@ void print_nodes( Node *head )
     printf("\n");
 }
 
-Node *delete_head_node( Node *head )
+Node *node_delete_head( Node *head )
 {
     Node *tmp = head;
     Node *tmp_2 = tmp;
@@ -102,7 +98,7 @@ Node *delete_head_node( Node *head )
     return tmp;
 }
 
-void delete_node( Node **head , int data)
+void node_delete( Node **head , int data)
 {  
     Node *tmp = *head; 
     Node *prev = *head;
@@ -129,7 +125,7 @@ void delete_node( Node **head , int data)
     curr = NULL;
 }
 
-void update_node( Node *head , int data , int new_data)
+void node_update( Node *head , int data , int new_data)
 {
     Node *tmp = head;
     bool found = false;
