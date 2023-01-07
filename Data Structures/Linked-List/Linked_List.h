@@ -13,8 +13,11 @@ typedef struct Node
 } Node;
 
 Node *create_node( int data );
-void *find_node( Node *head, int data );
+void find_node( Node *head, int data );
 void print_nodes( Node *head );
-void *insert_node_at_tail( Node *head, int data );
+void insert_node_at_tail( Node *head, int data );
+Node *insert_node_at_head( Node *head, int data );
+Node *delete_head_node( Node *head );
+void delete_node( Node **head , int data);
 
 #endif
