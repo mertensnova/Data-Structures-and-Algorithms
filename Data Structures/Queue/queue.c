@@ -22,13 +22,16 @@ int main(void)
     enqueue(9);
     enqueue(10);
     dequeue();
+    dequeue();
     enqueue(11);
-    // enqueue(12);
+    enqueue(12);
+    enqueue(13);
+    enqueue(14);
 
     // queue_front();
 
     for (int i = 0; i <= sizeof(array) / sizeof(array[0]); i++)
-        if (array[i] != 0) printf("%d->",array[i]);
+        if (array[i] != -1 && array[i] != 0) printf("%d->",array[i]);
     
     printf("\n");
     
@@ -39,8 +42,21 @@ void enqueue(int x)
 {
     if (rear <= 0)
     {
-        printf("Error: Queue overflow\n");
-        return;
+        for (int i = 0; i <= sizeof(array) / sizeof(array[0]); i++)
+        {
+            int next = (i + 1 ) % sizeof(array) / sizeof(array[0]);
+            // printf("%d\n",next);
+
+            if (array[next] == -1) 
+            {
+                // printf("%d\n",array[i]);
+                array[next] = x;
+                rear--;
+            }
+        }
+
+        // printf("Error: Queue overflow\n");
+        // return;
     }
     
     array[rear] = x;
@@ -56,7 +72,7 @@ void dequeue()
     }
     
     printf("You took out %d\n",array[front]);
-    array[front] = 0;
+    array[front] = -1;
     front--;
 }
 int queue_front()
