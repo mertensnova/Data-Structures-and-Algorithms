@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 #include "Stack.h"
 
 int top = EMPTY;
@@ -8,28 +9,19 @@ int array[STACK_LENGTH];
 
 int main()
 {
-
-    stack_push(1);
-    stack_push(2);
-    stack_push(3);
-    stack_push(4);
-    stack_push(5);
     stack_push(6);
+    stack_push(999);
 
-
-    int t = stack_top_return();
-  
-    printf("%d\n",t);
+    stack_pop();
+    stack_pop();
+   
+    stack_print();
 
     return 0;
 }
 
 void stack_print()
 {
-    // Print an array
-    // for (int i = -1; i <= top; i++)
-    //     printf("%d\n",array[i]);
-
     // Print an array in reverse order
     for (int i = top - 1; i >= EMPTY; i--)
         printf("%d\n",array[i]);
@@ -49,16 +41,23 @@ void stack_push(int x)
 
 void stack_pop()
 {   
-    if (top == EMPTY)
+    if (top < stack_is_empty())
     {
         printf("Error: Stack is empty");
         return;
     }
-
     top--;
 }
 
 int stack_top_return()
 {   
     return array[top - 1];
+}
+
+bool stack_is_empty()
+{
+    if (top != EMPTY)
+        return false;
+
+    return true;
 }

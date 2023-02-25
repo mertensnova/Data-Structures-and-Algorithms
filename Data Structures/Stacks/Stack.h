@@ -9,5 +9,6 @@ void stack_push(int x);
 void stack_pop();
 void stack_print();
 int stack_top_return();
+bool stack_is_empty();
 
 #endif
