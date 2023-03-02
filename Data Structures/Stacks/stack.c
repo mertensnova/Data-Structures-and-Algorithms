@@ -4,6 +4,8 @@
 #include <stdbool.h>
 #include "Stack.h"
 
+
+// Last In First Out
 int top = EMPTY;
 int array[STACK_LENGTH];
 

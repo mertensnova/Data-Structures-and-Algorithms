@@ -5,6 +5,8 @@
 #include "Queue.h"
 
 
+// First In First Out
+
 int array[QUEUE_LENGTH];
 int rear = -1;
 int front = -1;
@@ -14,67 +16,61 @@ int main(void)
 
     enqueue(1);
     enqueue(2);
-
-    // for (int i = 0; i <= sizeof(array) / sizeof(array[0]); i++)
-    //     if (array[i] != -1 && array[i] != 0) printf("%d->",array[i]);
-    
-    printf("\n");
-    
+    enqueue(3);
+    enqueue(4);
+    dequeue();
+    dequeue();
+    enqueue(5);
+    enqueue(6);
+    print_queue();    
     return 0;
 }
 
 void enqueue(int x)
 {
-    if (queue_is_full)
+    if ((rear + 1) % QUEUE_LENGTH  == front)
     {
         printf("Error: Queue is full\n");
         return;
     }
-    else if (queue_is_empty)
+    if (front == -1 && rear == -1)
     {
         front = 0;
         rear = 0;
     }
-    else
-        rear = rear + 1;
 
-    
+    rear = (rear+1) % QUEUE_LENGTH;
     array[rear] = x;
 }
 
 void dequeue()
 {
-    if (queue_is_empty)
+    if (front == -1 && rear == -1)
     {
         printf("Error: Queue is empty\n");
         return;
     }
-    else if (front == rear)
+    if (front == rear)
     {
         front = -1;
         rear = -1;
     }
-
-    front++;
+    else
+        front = (front + 1) % QUEUE_LENGTH;
 }
+
 int queue_front()
 {
-    printf("First number %d\n",array[front]);
-    return array[front];
+    printf("First number %d\n",array[front + 1]);
+    return array[front + 1];
 }
 
-bool queue_is_full()
+void print_queue()
 {
-    if (rear == QUEUE_LENGTH - 1)
-        return true;
-    
-    return false;
-}
-
-bool queue_is_empty()
-{
-    if (front == -1 && rear == -1) 
-        return true;
-    
-    return false;
+   int count = (rear + QUEUE_LENGTH - front) % QUEUE_LENGTH + 1;
+	for(int i = 0; i < count; i++)
+	{
+		int index = (front + i ) % QUEUE_LENGTH; // Index of element while travesing circularly from front
+		printf("%d=>",array[index]);
+	}
 }

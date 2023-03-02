@@ -1,12 +1,11 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 
-#define QUEUE_LENGTH (10)
+#define QUEUE_LENGTH (5)
 
 void enqueue(int x);
 void dequeue();
 int queue_front();
-bool queue_is_empty();
-bool queue_is_full();
+void print_queue();
 
 #endif
