@@ -1,14 +1,14 @@
 #ifndef STACK_H
 #define STACK_H
 
+typedef struct Node {
+  int data;
+  struct Node *next;
+} Node;
 
-#define STACK_LENGTH (20)
-#define EMPTY (-1)
-
-void stack_push(int x);
-void stack_pop();
-void stack_print();
-int stack_top_return();
-bool stack_is_empty();
-
+Node *new_node(int value);
+void stack_push(int value, Node **head);
+void stack_pop(Node **head);
+void stack_print(Node *head);
+int stack_peek(Node *head);
 #endif

@@ -1,76 +1,51 @@
+#include "Queue.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <stdbool.h>
-#include "Queue.h"
 
-
+int lenght = 0;
 // First In First Out
+int main(void) {
 
-int array[QUEUE_LENGTH];
-int rear = -1;
-int front = -1;
+  Node *head = NULL;
+  Node *tail = NULL;
+  enqueue(1, &tail, &head);
+  enqueue(2, &tail, &head);
+  enqueue(3, &tail, &head);
+  enqueue(4, &tail, &head);
+  enqueue(5, &tail, &head);
 
-int main(void)
-{
-
-    enqueue(1);
-    enqueue(2);
-    enqueue(3);
-    enqueue(4);
-    dequeue();
-    dequeue();
-    enqueue(5);
-    enqueue(6);
-    print_queue();    
-    return 0;
+  deque(&head);
+  print_queue(head);
+  return 0;
 }
 
-void enqueue(int x)
-{
-    if ((rear + 1) % QUEUE_LENGTH  == front)
-    {
-        printf("Error: Queue is full\n");
-        return;
-    }
-    if (front == -1 && rear == -1)
-    {
-        front = 0;
-        rear = 0;
-    }
+void enqueue(int value, Node **tail, Node **head) {
+  Node *node = (Node *)malloc(sizeof(Node));
+  node->data = value;
+  node->next = NULL;
 
-    rear = (rear+1) % QUEUE_LENGTH;
-    array[rear] = x;
+  if (*tail == NULL && *head == NULL) {
+    *tail = *head = node;
+  } else {
+    (*tail)->next = node;
+    *tail = node;
+  }
+  lenght++;
 }
-
-void dequeue()
-{
-    if (front == -1 && rear == -1)
-    {
-        printf("Error: Queue is empty\n");
-        return;
-    }
-    if (front == rear)
-    {
-        front = -1;
-        rear = -1;
-    }
-    else
-        front = (front + 1) % QUEUE_LENGTH;
+Node *deque(Node **head) {
+  Node *tmp = *head;
+  *head = (*head)->next;
+  tmp->next = NULL;
+  lenght--;
+  return tmp;
 }
+int peek(Node *head) { return head->data; }
 
-int queue_front()
-{
-    printf("First number %d\n",array[front + 1]);
-    return array[front + 1];
-}
+void print_queue(Node *head) {
 
-void print_queue()
-{
-   int count = (rear + QUEUE_LENGTH - front) % QUEUE_LENGTH + 1;
-	for(int i = 0; i < count; i++)
-	{
-		int index = (front + i ) % QUEUE_LENGTH; // Index of element while travesing circularly from front
-		printf("%d=>",array[index]);
-	}
+  Node *tmp = head;
+  while (tmp != NULL) {
+    printf("%d<-", tmp->data);
+    tmp = tmp->next;
+  }
 }

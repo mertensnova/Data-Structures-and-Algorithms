@@ -1,65 +1,58 @@
+#include "Stack.h"
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdbool.h>
-#include "Stack.h"
-
 
 // Last In First Out
-int top = EMPTY;
-int array[STACK_LENGTH];
 
-int main()
-{
-    stack_push(6);
-    stack_push(999);
+int length = 0;
 
-    stack_pop();
-    stack_pop();
-   
-    stack_print();
+int main() {
 
-    return 0;
+  Node *head = NULL;
+
+  stack_push(1, &head);
+  stack_push(2, &head);
+  stack_push(3, &head);
+
+  stack_pop(&head);
+  stack_print(head);
+  return 0;
 }
 
-void stack_print()
-{
-    // Print an array in reverse order
-    for (int i = top - 1; i >= EMPTY; i--)
-        printf("%d\n",array[i]);
+Node *new_node(int value) {
+
+  Node *node = (Node *)malloc(sizeof(Node));
+  node->data = value;
+  node->next = NULL;
+
+  return node;
+}
+void stack_push(int value, Node **head) {
+  Node *node = new_node(value);
+  length++;
+  if (*head == NULL) {
+    *head = node;
+    return;
+  }
+  node->next = (*head);
+  (*head) = node;
+}
+void stack_pop(Node **head) {
+  Node *tmp = *head;
+  *head = tmp->next;
+
+  length--;
 }
 
-void stack_push(int x)
-{
-    if (top == STACK_LENGTH - 1)
-    {
-        printf("Error: Buffer Overflow");
-        return;
-    }
-    
-    array[top] = x; 
-    top++;  
+
+void stack_print(Node *head) {
+  Node *tmp = head;
+  while (tmp != NULL) {
+    printf("%d->", tmp->data);
+    tmp = tmp->next;
+  }
 }
 
-void stack_pop()
-{   
-    if (top < stack_is_empty())
-    {
-        printf("Error: Stack is empty");
-        return;
-    }
-    top--;
-}
-
-int stack_top_return()
-{   
-    return array[top - 1];
-}
-
-bool stack_is_empty()
-{
-    if (top != EMPTY)
-        return false;
-
-    return true;
-}
+int stack_peek(Node *head) { return head->data; }
