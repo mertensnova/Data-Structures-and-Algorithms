@@ -1,58 +1,49 @@
-#include "Stack.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+#include "stack.h"
 // Last In First Out
-
-int length = 0;
 
 int main() {
 
   Node *head = NULL;
 
-  stack_push(1, &head);
-  stack_push(2, &head);
-  stack_push(3, &head);
+  stack_push(node_create(1), &head);
+  stack_push(node_create(2), &head);
+  stack_push(node_create(3), &head);
 
   stack_pop(&head);
-  stack_print(head);
   return 0;
 }
 
-Node *new_node(int value) {
-
-  Node *node = (Node *)malloc(sizeof(Node));
-  node->data = value;
-  node->next = NULL;
-
+Node *node_create(int value) {
+  // Allocate a memory for the new node
+  Node *node = malloc(sizeof(Node));
+  // Init the new node. Set the data to value given and set next to NULL
+  *node = (Node){value, NULL};
   return node;
 }
-void stack_push(int value, Node **head) {
-  Node *node = new_node(value);
-  length++;
-  if (*head == NULL) {
-    *head = node;
-    return;
+
+int stack_push(Node *node, Node **out_head) {
+
+  // If head is null set head to new node
+  if (*out_head == NULL) {
+    *out_head = node;
+    return 0;
   }
-  node->next = (*head);
-  (*head) = node;
+
+  // Insert new node
+  node->next = (*out_head);
+  (*out_head) = node;
+  return 0;
 }
-void stack_pop(Node **head) {
-  Node *tmp = *head;
-  *head = tmp->next;
-
-  length--;
-}
-
-
-void stack_print(Node *head) {
-  Node *tmp = head;
-  while (tmp != NULL) {
-    printf("%d->", tmp->data);
-    tmp = tmp->next;
-  }
+int stack_pop(Node **out_head) {
+  Node *cursor = *out_head;
+  *out_head = cursor->next;
+  return 0;
 }
 
-int stack_peek(Node *head) { return head->data; }
+int stack_peek(Node *out_head) { return out_head->data; }
+

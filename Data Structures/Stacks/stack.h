@@ -6,9 +6,9 @@ typedef struct Node {
   struct Node *next;
 } Node;
 
-Node *new_node(int value);
-void stack_push(int value, Node **head);
-void stack_pop(Node **head);
-void stack_print(Node *head);
+Node *node_create(int value);
+int stack_push(Node *node, Node **out_head);
+int stack_pop(Node **out_head);
 int stack_peek(Node *head);
+
 #endif
