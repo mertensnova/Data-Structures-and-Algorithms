@@ -1,30 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include "tree.h"
 
 int main()
 {
-    Node *root = node_create(7);
+    Node *root = node_create(17);
+    bst_insert(node_create(15), root);
+    bst_insert(node_create(50), root);
+    bst_insert(node_create(4), root);
+    bst_insert(node_create(16), root);
+    bst_insert(node_create(25), root);
 
-    node_add_left(node_create(23), &root, root);
-    node_add_left(node_create(4), &root, root);
-    node_add_left(node_create(5), &root, root);
+    bool x = bst_find(root, 1);
+    printf("%d", x);
 
-    node_add_right(node_create(3), &root, root);
-    node_add_right(node_create(18), &root, root);
-    node_add_right(node_create(21), &root, root);
-
-    printf("Pre Order\t");
-    traverse_pre(root);
-    printf("\n");
-
-    printf("In Order\t");
-    traverse_inorder(root);
-    printf("\n");
-
-    printf("Post Order\t");
-    traverse_post(root);
-    printf("\n");
     return 0;
 }
 
@@ -34,7 +24,22 @@ Node *node_create(int value)
     *node = (Node){value, NULL, NULL};
     return node;
 }
-void node_add_right(Node *node, Node **out_root, Node *root)
+
+void bst_insert(Node *node, Node *root)
+{
+    if (root == NULL)
+        return;
+
+    if (node->data <= root->data)
+        node_add_left(node, root);
+
+    if (node->data >= root->data)
+        node_add_right(node, root);
+
+    return;
+}
+
+void node_add_right(Node *node, Node *root)
 {
     Node *cursor = root;
 
@@ -54,7 +59,7 @@ void node_add_right(Node *node, Node **out_root, Node *root)
 
     return;
 }
-void node_add_left(Node *node, Node **out_root, Node *root)
+void node_add_left(Node *node, Node *root)
 {
     Node *cursor = root;
 
@@ -106,4 +111,23 @@ void traverse_post(Node *root)
     traverse_pre(cursor->left);
     traverse_pre(cursor->right);
     printf("%d -> ", cursor->data);
+}
+
+bool bst_find(Node *root, int value)
+{
+    if (!root)
+        return false;
+
+    if (root->data == value)
+        return true;
+
+    if (root->data <= value)
+        return bst_find(root->right, value);
+
+    return bst_find(root->left, value);
+}
+void BFS(Node *root)
+{
+
+    return;
 }
