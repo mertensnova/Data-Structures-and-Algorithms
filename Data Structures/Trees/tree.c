@@ -11,10 +11,20 @@ int main()
     bst_insert(node_create(4), root);
     bst_insert(node_create(16), root);
     bst_insert(node_create(25), root);
+    bst_insert(node_create(60), root);
 
-    bool x = bst_find(root, 1);
-    printf("%d", x);
+    printf("Pre: ");
+    traverse_pre(root);
+    printf("\n");
 
+    printf("INorder: ");
+    traverse_inorder(root);
+    printf("\n");
+
+    printf("Post: ");
+    traverse_post(root);
+
+    printf("\n");
     return 0;
 }
 
@@ -23,6 +33,11 @@ Node *node_create(int value)
     Node *node = malloc(sizeof(Node));
     *node = (Node){value, NULL, NULL};
     return node;
+}
+
+void node_delete(Node *root, int value)
+{
+    
 }
 
 void bst_insert(Node *node, Node *root)
@@ -97,9 +112,9 @@ void traverse_inorder(Node *root)
     if (cursor == NULL)
         return;
 
-    traverse_pre(cursor->left);
+    traverse_inorder(cursor->left);
     printf("%d -> ", cursor->data);
-    traverse_pre(cursor->right);
+    traverse_inorder(cursor->right);
 }
 void traverse_post(Node *root)
 {
@@ -108,24 +123,25 @@ void traverse_post(Node *root)
     if (cursor == NULL)
         return;
 
-    traverse_pre(cursor->left);
-    traverse_pre(cursor->right);
+    traverse_post(cursor->left);
+    traverse_post(cursor->right);
     printf("%d -> ", cursor->data);
 }
 
-bool bst_find(Node *root, int value)
+Node *bst_find(Node *root, int value)
 {
     if (!root)
-        return false;
+        return NULL;
 
     if (root->data == value)
-        return true;
+        return root;
 
     if (root->data <= value)
         return bst_find(root->right, value);
 
     return bst_find(root->left, value);
 }
+
 void BFS(Node *root)
 {
 
