@@ -21,7 +21,6 @@ bool binary_search(int *haystack, int needle, size_t size) {
   int high = size;
 
   do {
-
     int middle = floor(low + (high - low) / 2);
     int value = haystack[middle];
     if (needle == value)
