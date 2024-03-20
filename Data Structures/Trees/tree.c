@@ -144,6 +144,5 @@ Node *bst_find(Node *root, int value)
 
 void BFS(Node *root)
 {
-
     return;
 }
