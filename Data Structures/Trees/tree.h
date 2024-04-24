@@ -23,7 +23,7 @@ void traverse_inorder(Node *root);
 void traverse_post(Node *root);
 Node *bst_find(Node *root, int value);
 
-void BFS(Node *root);
+void bfs(Node *root);
 
 void node_delete(Node *root, int value);
 #endif
