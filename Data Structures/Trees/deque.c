@@ -1,26 +1,52 @@
 #include "deque.h"
+#include "tree.h"
 #include <stdio.h>
 #include <stdlib.h>
 
-QueueNode *queue_node_create(Node value) {
-  QueueNode *node = malloc(sizeof(QueueNode));
-  *node = (QueueNode){value, NULL};
+int size = 0;
+
+DequeNode *deque_node_create(TreeNode *value) {
+  DequeNode *node = malloc(sizeof(DequeNode));
+  node->data = *value;
+  node->next = NULL;
   return node;
 }
 
-void enqueue(QueueNode *node, QueueNode **out_tail, QueueNode **out_head) {
+void enqueue(DequeNode *node, DequeNode **out_head, DequeNode **out_tail) {
 
-  if (*out_tail == NULL && *out_head == NULL) {
+  if (*out_head == NULL && *out_tail == NULL) {
     *out_tail = *out_head = node;
+    return;
   }
+
   (*out_tail)->next = node;
   *out_tail = node;
-}
-QueueNode *deque(QueueNode *head, QueueNode **out_head) {
-  QueueNode *cursor = head;
-  *out_head = (*out_head)->next;
-  cursor->next = NULL;
-  return cursor;
+
+  size++;
+  return;
 }
 
-//int peek(QueueNode *head) { return head->data; }
+DequeNode *deque(DequeNode **out_head) {
+
+  if (size == 0)
+    return NULL;
+
+  if (*out_head == NULL) {
+    return NULL;
+  }
+  *out_head = (*out_head)->next;
+  size--;
+  DequeNode *curr = *out_head;
+  return curr;
+}
+
+void dp(DequeNode *head) {
+  DequeNode *tmp = head;
+  while (tmp != NULL) {
+    printf("%d->", tmp->data.data);
+    tmp = tmp->next;
+  }
+  printf("\n");
+  return;
+}
+

@@ -2,14 +2,18 @@
 #define QUEUE_H
 #include "tree.h"
 
-typedef struct QueueNode {
-  Node data;
-  struct QueueNode *next;
-} QueueNode;
+extern int size;
 
-QueueNode *queue_node_create(Node value);
-void enqueue(QueueNode *node, QueueNode **out_tail, QueueNode **out_head);
-QueueNode *deque(QueueNode *head, QueueNode **out_head);
-//int peek(QueueNode *head);
+typedef struct DequeNode {
+  TreeNode data;
+  struct DequeNode *next;
+} DequeNode;
 
+
+DequeNode *deque_node_create(TreeNode *value);
+void enqueue(DequeNode *node, DequeNode **out_head, DequeNode **out_tail);
+void dp(DequeNode *head);
+
+DequeNode *deque(DequeNode **out_head);
 #endif
+

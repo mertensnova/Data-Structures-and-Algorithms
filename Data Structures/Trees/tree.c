@@ -1,30 +1,17 @@
 #include "tree.h"
+#include "deque.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-int main() {
-  Node *root = node_create(4);
-  bst_insert(node_create(3), root);
-  bst_insert(node_create(6), root);
-  bst_insert(node_create(2), root);
-  bst_insert(node_create(5), root);
-  bst_insert(node_create(7), root);
 
-  traverse_pre(root);
-  printf("\n");
-  return 0;
-}
-
-Node *node_create(int value) {
-  Node *node = malloc(sizeof(Node));
-  *node = (Node){value, NULL, NULL};
+TreeNode *node_create(int value) {
+  TreeNode *node = malloc(sizeof(TreeNode));
+  *node = (TreeNode){value, NULL, NULL};
   return node;
 }
 
-void node_delete(Node *root, int value) {}
-
-void bst_insert(Node *node, Node *root) {
+void bst_insert(TreeNode *node, TreeNode *root) {
   if (root == NULL)
     return;
 
@@ -37,8 +24,8 @@ void bst_insert(Node *node, Node *root) {
   return;
 }
 
-void node_add_right(Node *node, Node *root) {
-  Node *cursor = root;
+void node_add_right(TreeNode *node, TreeNode *root) {
+  TreeNode *cursor = root;
 
   while (cursor->right != NULL && cursor->left != NULL)
     cursor = cursor->right;
@@ -54,8 +41,8 @@ void node_add_right(Node *node, Node *root) {
 
   return;
 }
-void node_add_left(Node *node, Node *root) {
-  Node *cursor = root;
+void node_add_left(TreeNode *node, TreeNode *root) {
+  TreeNode *cursor = root;
 
   while (cursor->left != NULL && cursor->right != NULL)
     cursor = cursor->left;
@@ -71,8 +58,8 @@ void node_add_left(Node *node, Node *root) {
   }
 }
 
-void traverse_pre(Node *root) {
-  Node *cursor = root;
+void traverse_pre(TreeNode *root) {
+  TreeNode *cursor = root;
 
   if (cursor == NULL)
     return;
@@ -81,8 +68,8 @@ void traverse_pre(Node *root) {
   traverse_pre(cursor->left);
   traverse_pre(cursor->right);
 }
-void traverse_inorder(Node *root) {
-  Node *cursor = root;
+void traverse_inorder(TreeNode *root) {
+  TreeNode *cursor = root;
 
   if (cursor == NULL)
     return;
@@ -91,8 +78,8 @@ void traverse_inorder(Node *root) {
   printf("%d -> ", cursor->data);
   traverse_inorder(cursor->right);
 }
-void traverse_post(Node *root) {
-  Node *cursor = root;
+void traverse_post(TreeNode *root) {
+  TreeNode *cursor = root;
 
   if (cursor == NULL)
     return;
@@ -100,9 +87,10 @@ void traverse_post(Node *root) {
   traverse_post(cursor->left);
   traverse_post(cursor->right);
   printf("%d -> ", cursor->data);
+
 }
 
-Node *bst_find(Node *root, int value) {
+TreeNode *bst_find(TreeNode *root, int value) {
   if (!root)
     return NULL;
 
@@ -115,3 +103,36 @@ Node *bst_find(Node *root, int value) {
   return bst_find(root->left, value);
 }
 
+void bfs(TreeNode *root) {
+
+  if (!root) {
+    return;
+  }
+
+  DequeNode *node = malloc(sizeof(DequeNode));
+  node->data = *root;
+  node->next = NULL;
+
+  DequeNode *head = node;
+  DequeNode *tail = head;
+
+  enqueue(node, &head, &tail);
+
+  while (size > 0) {
+
+    for (DequeNode *tmp = head; tmp != NULL; tmp = tmp->next) {
+      DequeNode *curr = deque(&head);
+      printf("%d -> ", tmp->data.data);
+
+      if (curr->data.left) {
+        DequeNode *left_node = deque_node_create(curr->data.left);
+        enqueue(left_node, &head, &tail);
+      }
+      if (curr->data.right) {
+        DequeNode *right_node = deque_node_create(curr->data.right);
+        enqueue(right_node, &head, &tail);
+      }
+    }
+  }
+  printf("\n");
+}
